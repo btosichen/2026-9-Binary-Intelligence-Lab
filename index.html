@@ -6,6 +6,7 @@
     <title>Binary Intelligence Lab 數位解碼任務</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* 引入圓潤可愛標題字體與等寬字體 */
         @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Noto+Sans+TC:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap');
 
         :root {
@@ -29,9 +30,15 @@
             100% { background-position: 0% 50%; }
         }
 
-        h1, h2, h3, .font-cute { font-family: 'Fredoka', 'Noto Sans TC', sans-serif; }
-        .font-mono { font-family: 'Space Mono', monospace; }
+        h1, h2, h3, .font-cute {
+            font-family: 'Fredoka', 'Noto Sans TC', sans-serif;
+        }
 
+        .font-mono {
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* 毛玻璃白底卡片 */
         .glass-card {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
@@ -40,6 +47,7 @@
             border: 2px solid rgba(255, 255, 255, 0.8);
         }
 
+        /* 遊戲化果凍按鈕 */
         .btn-game {
             background: linear-gradient(135deg, #FF3366 0%, #FF7733 100%);
             color: white;
@@ -50,8 +58,19 @@
             box-shadow: 0 6px 0 #D01140, 0 10px 20px rgba(255, 51, 102, 0.3);
             transition: all 0.1s;
         }
-        .btn-game:hover { transform: translateY(-2px); box-shadow: 0 8px 0 #D01140, 0 15px 25px rgba(255, 51, 102, 0.4); }
-        .btn-game:active { transform: translateY(6px); box-shadow: 0 0px 0 #D01140, 0 2px 5px rgba(255, 51, 102, 0.3); }
+        .btn-game:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 #D01140, 0 15px 25px rgba(255, 51, 102, 0.4);
+        }
+        .btn-game:active {
+            transform: translateY(6px);
+            box-shadow: 0 0px 0 #D01140, 0 2px 5px rgba(255, 51, 102, 0.3);
+        }
+
+        .btn-blue {
+            background: linear-gradient(135deg, #00C2FF 0%, #0077FF 100%);
+            box-shadow: 0 6px 0 #0055B3, 0 10px 20px rgba(0, 194, 255, 0.3);
+        }
 
         .input-cute {
             background: white;
@@ -61,11 +80,15 @@
             font-weight: bold;
             transition: all 0.3s;
         }
-        .input-cute:focus { outline: none; border-color: var(--secondary); box-shadow: 0 0 0 4px rgba(0, 194, 255, 0.2); }
+        .input-cute:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 4px rgba(0, 194, 255, 0.2);
+        }
 
         /* 排行榜捲軸 */
         .leaderboard-scroll {
-            max-height: 200px;
+            max-height: 300px;
             overflow-y: auto;
             scrollbar-width: thin;
             scrollbar-color: #CBD5E1 transparent;
@@ -80,19 +103,47 @@
             border-radius: 0.75rem;
             cursor: pointer;
             transition: all 0.2s;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             box-shadow: inset 0 -4px 0 #E2E8F0;
         }
-        .bit-switch.on { background-color: var(--secondary); border-color: #0099CC; box-shadow: inset 0 4px 0 #0099CC; transform: translateY(2px); }
-        .bit-switch.on .bit-led { background-color: white; box-shadow: 0 0 10px white; }
-        .bit-led { width: 20px; height: 10px; background-color: #94A3B8; border-radius: 99px; transition: all 0.2s; }
+        .bit-switch.on {
+            background-color: var(--secondary);
+            border-color: #0099CC;
+            box-shadow: inset 0 4px 0 #0099CC;
+            transform: translateY(2px);
+        }
+        .bit-led {
+            width: 20px; height: 10px;
+            background-color: #94A3B8;
+            border-radius: 99px;
+            transition: all 0.2s;
+        }
+        .bit-switch.on .bit-led {
+            background-color: white;
+            box-shadow: 0 0 10px white;
+        }
+
+        .radio-card input[type="radio"] { display: none; }
+        .radio-card {
+            background: white; border: 3px solid #E2E8F0; border-radius: 1rem; padding: 0.75rem 1.25rem;
+            cursor: pointer; transition: all 0.2s; font-weight: bold; color: #475569;
+        }
+        .radio-card.selected {
+            border-color: var(--secondary); background: #E0F2FE; color: #0369A1;
+            box-shadow: 0 4px 0 var(--secondary); transform: translateY(-2px);
+        }
 
         .hidden { display: none !important; }
 
         .video-container {
-            position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; border: 4px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+            border-radius: 1rem; border: 4px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
         .shape { position: fixed; z-index: -1; opacity: 0.5; }
     </style>
 </head>
@@ -103,9 +154,12 @@
 
     <header class="p-4 sticky top-0 z-40 hidden" id="top-nav">
         <div class="max-w-4xl mx-auto glass-card px-6 py-3 flex justify-between items-center">
-            <div class="font-cute text-2xl font-bold text-pink-500 flex items-center gap-2">🎮 <span class="hidden sm:inline">MINERVA LAB</span></div>
+            <div class="font-cute text-2xl font-bold text-pink-500 flex items-center gap-2">
+                🎮 <span class="hidden sm:inline">MINERVA LAB</span>
+            </div>
             <div class="flex items-center space-x-4 text-sm font-bold text-gray-700">
                 <div class="bg-white/80 px-3 py-1 rounded-full shadow-sm">👤 <span id="nav-agent-name" class="text-blue-600">---</span></div>
+                <div class="bg-white/80 px-3 py-1 rounded-full shadow-sm">🚩 <span id="nav-stage">1/7</span></div>
                 <div class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full shadow-sm border border-yellow-300">⏱️ <span id="nav-time" class="font-mono">00:00</span></div>
             </div>
         </div>
@@ -113,16 +167,17 @@
 
     <main class="flex-grow flex items-center justify-center p-4 z-10 relative">
         
-        <!-- 首頁與排行榜 -->
-        <section id="stage-0" class="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+        <!-- 首頁 (新增排行榜) -->
+        <section id="stage-0" class="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
             <!-- 登入卡片 -->
-            <div class="glass-card p-8 text-center relative overflow-hidden h-full">
+            <div class="glass-card p-8 text-center relative overflow-hidden flex flex-col justify-center">
+                <div class="absolute -top-10 -right-10 text-9xl opacity-10">🧠</div>
                 <div class="mb-6 relative z-10">
                     <div class="inline-block bg-white p-4 rounded-3xl shadow-lg mb-4 rotate-3">
                         <span class="text-5xl">🚀</span>
                     </div>
                     <h1 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500 mb-1">數位解碼任務</h1>
-                    <p class="text-gray-500 font-bold">請輸入情報員基本資料</p>
+                    <h2 class="text-md text-gray-500 font-bold">Binary Intelligence Lab</h2>
                 </div>
                 <div class="space-y-4 text-left relative z-10">
                     <div>
@@ -137,101 +192,232 @@
                         <label class="block text-gray-600 font-bold mb-1 ml-1 text-sm">📛 姓名</label>
                         <input type="text" id="input-name" class="w-full input-cute p-3" placeholder="輸入真實姓名">
                     </div>
-                    <button id="btn-start" class="w-full mt-4 btn-game py-4 text-xl tracking-widest block">開始任務 START!</button>
+                    <button id="btn-start" class="w-full mt-6 btn-game py-4 text-xl tracking-widest block">開始挑戰 START!</button>
                 </div>
             </div>
 
-            <!-- 排行榜卡片 -->
-            <div class="glass-card p-6 h-full flex flex-col">
-                <h3 class="text-xl font-bold text-gray-700 mb-4 flex items-center gap-2">
-                    🏆 榮譽排行榜 (Top 10)
-                </h3>
+            <!-- 排行榜區塊 -->
+            <div class="glass-card p-8 flex flex-col">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold text-gray-700 flex items-center gap-2">
+                        🏆 榮譽排行榜 (Top 10)
+                    </h3>
+                    <button id="btn-refresh-leaderboard" class="text-xs font-bold text-blue-500 hover:text-blue-700 transition">🔄 重新整理</button>
+                </div>
+                
                 <div id="leaderboard-container" class="leaderboard-scroll flex-grow">
-                    <!-- 載入中狀態 -->
-                    <div id="leaderboard-loading" class="flex flex-col items-center justify-center py-10 text-gray-400">
-                        <div class="animate-spin text-3xl mb-2">🌀</div>
-                        <p class="text-sm font-bold">同步情報中...</p>
+                    <!-- 載入中 -->
+                    <div id="leaderboard-loading" class="flex flex-col items-center justify-center py-20 text-gray-400">
+                        <div class="animate-spin text-3xl mb-3">🌀</div>
+                        <p class="font-bold">連線情報庫中...</p>
                     </div>
-                    <!-- 列表 -->
+                    <!-- 表格 -->
                     <table class="w-full text-left text-sm hidden" id="leaderboard-table">
                         <thead class="sticky top-0 bg-white/90">
-                            <tr class="text-gray-400 border-b">
+                            <tr class="text-gray-400 border-b border-gray-100">
                                 <th class="py-2 pl-2">名次</th>
                                 <th class="py-2">情報員</th>
-                                <th class="py-2 text-right pr-2">時間</th>
+                                <th class="py-2 text-right pr-2">通關時間</th>
                             </tr>
                         </thead>
                         <tbody id="leaderboard-body" class="text-gray-600 font-bold">
-                            <!-- 格式範例: <tr><td class="py-2">1</td><td>王小明</td><td class="text-right">02:30</td></tr> -->
+                            <!-- 由 JS 動態生成 -->
                         </tbody>
                     </table>
                 </div>
-                <div class="mt-4 text-center">
-                    <a href="https://docs.google.com/spreadsheets/d/1M5beg7mPqOypRTMDMQhQX6R48m1uhFzYgveF1Jpt_Dg/edit?usp=sharing" target="_blank" class="text-xs text-blue-500 hover:underline font-bold">
-                        🔗 查看完整成績試算表
+
+                <div class="mt-6 pt-4 border-t border-gray-100 text-center">
+                    <a href="https://docs.google.com/spreadsheets/d/1M5beg7mPqOypRTMDMQhQX6R48m1uhFzYgveF1Jpt_Dg/edit?usp=sharing" target="_blank" class="text-xs text-blue-400 hover:text-blue-600 font-bold flex items-center justify-center gap-1">
+                        📊 查看完整雲端成績單
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- 關卡內容 (略，結構同前，僅保留邏輯掛載點) -->
+        <!-- 關卡 1 -->
         <section id="stage-1" class="w-full max-w-3xl hidden">
-            <div class="glass-card p-8">
-                <h2 class="text-2xl font-bold mb-4">第一關：二進位挑戰</h2>
-                <div id="s1-content" class="text-center">
-                    <p class="mb-4">目標數字：<span id="s1-target" class="text-4xl font-black text-blue-500">0</span></p>
-                    <div id="bit-switches-container" class="flex justify-center gap-2 mb-4"></div>
-                    <p>目前總和：<span id="s1-current" class="text-2xl font-bold">0</span></p>
+            <div class="glass-card p-6 sm:p-8 relative">
+                <div class="absolute top-0 right-0 bg-pink-500 text-white font-bold px-4 py-1 rounded-bl-2xl rounded-tr-xl">STAGE 1</div>
+                <div class="flex flex-col sm:flex-row justify-between items-center border-b-2 border-gray-100 pb-4 mb-6 gap-2">
+                    <h2 class="text-2xl font-bold text-gray-800 flex items-center gap-2">💡 二進位暖身操</h2>
+                    <span class="bg-blue-100 text-blue-700 px-4 py-1 rounded-full font-bold text-sm border border-blue-200">過關進度: <span id="s1-progress" class="text-lg">0</span> / 5</span>
+                </div>
+                <div class="text-center mb-8 bg-white rounded-3xl p-6 shadow-inner border-4 border-gray-50">
+                    <div class="text-gray-400 font-bold mb-1 tracking-wider text-sm">目標數字 (TARGET)</div>
+                    <div class="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500 font-mono" id="s1-target">0</div>
+                </div>
+                <div class="flex justify-center flex-wrap gap-2 sm:gap-4 mb-8" id="bit-switches-container"></div>
+                <div class="text-center bg-gray-50 p-4 rounded-2xl border-2 border-dashed border-gray-200">
+                    <div class="text-gray-500 font-bold">目前總和</div>
+                    <div class="text-4xl font-black text-gray-800 font-mono my-2"><span id="s1-current">0</span></div>
+                    <div id="s1-msg" class="h-6 mt-1 text-pink-500 font-bold"></div>
                 </div>
             </div>
         </section>
 
-        <!-- 其餘關卡 2-7 的容器 (為簡化，此處僅示意其結構存在) -->
-        <section id="stage-7" class="w-full max-w-3xl hidden">
-            <div class="glass-card p-8 text-center">
-                <h2 class="text-2xl font-bold mb-4">最後關卡：影片解碼</h2>
-                <div class="video-container mb-4">
+        <!-- 關卡 2 -->
+        <section id="stage-2" class="w-full max-w-3xl hidden">
+            <div class="glass-card p-6 sm:p-8 relative">
+                <div class="absolute top-0 right-0 bg-blue-500 text-white font-bold px-4 py-1 rounded-bl-2xl rounded-tr-xl">STAGE 2</div>
+                <h2 class="text-2xl font-bold text-gray-800 border-b-2 border-gray-100 pb-4 mb-6">📦 容量與傳輸比一比</h2>
+                <div id="s2-question-container" class="space-y-6"></div>
+                <div class="mt-8 flex flex-col sm:flex-row justify-between items-center gap-4 border-t-2 border-gray-100 pt-6">
+                    <div id="s2-msg" class="text-pink-500 font-bold h-6"></div>
+                    <button id="btn-check-s2" class="btn-game btn-blue px-8 py-3 w-full sm:w-auto">送出答案 🚀</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 關卡 3 -->
+        <section id="stage-3" class="w-full max-w-3xl hidden">
+            <div class="glass-card p-6 sm:p-8 relative">
+                <div class="absolute top-0 right-0 bg-purple-500 text-white font-bold px-4 py-1 rounded-bl-2xl rounded-tr-xl">STAGE 3</div>
+                <h2 class="text-2xl font-bold text-gray-800 border-b-2 border-gray-100 pb-4 mb-6">🔤 文字背後的秘密</h2>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border-2 border-gray-100 flex flex-col md:flex-row gap-8 items-center justify-center">
+                    <input type="text" id="s3-input" maxlength="1" class="w-32 h-32 text-center text-7xl input-cute text-pink-500 uppercase font-black" placeholder="?">
+                    <div class="flex flex-col gap-4 w-full md:w-auto text-center">
+                        <div class="bg-blue-50 p-4 rounded-2xl border-2 border-blue-100">
+                            <div class="text-xs font-bold text-blue-500">ASCII (十進制)</div>
+                            <div id="s3-dec" class="text-4xl font-black text-blue-600 font-mono">---</div>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-2xl border-2 border-green-100">
+                            <div class="text-xs font-bold text-green-500">BINARY (二進制)</div>
+                            <div id="s3-bin" class="text-3xl font-black text-green-600 font-mono tracking-widest">--------</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-8 flex justify-between items-center">
+                    <div class="bg-gray-100 px-4 py-2 rounded-full font-bold text-gray-600">已收集字母: <span id="s3-count" class="text-pink-500">0</span> / 3</div>
+                    <button id="s3-next-btn" class="btn-game px-8 py-3 hidden">太酷了，繼續！ ✨</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 關卡 4 (摩斯密碼) -->
+        <section id="stage-4" class="w-full max-w-4xl hidden">
+            <div class="glass-card p-6 sm:p-8 relative">
+                <div class="absolute top-0 right-0 bg-orange-500 text-white font-bold px-4 py-1 rounded-bl-2xl rounded-tr-xl">STAGE 4</div>
+                <h2 class="text-2xl font-bold text-gray-800 border-b-2 border-gray-100 pb-4 mb-6">📻 攔截摩斯密碼</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/International_Morse_Code.svg/1200px-International_Morse_Code.svg.png" class="w-full rounded-xl">
+                    <div class="flex flex-col justify-center">
+                        <div class="bg-gray-800 p-6 rounded-3xl mb-6 text-center">
+                            <div id="s4-morse-display" class="text-5xl font-black text-white mb-6 font-mono">.... . .-.. .-.. ---</div>
+                            <button id="btn-play-morse" class="bg-green-500 text-green-900 font-bold px-6 py-3 rounded-full w-full">🔊 播放聲音</button>
+                        </div>
+                        <input type="text" id="s4-input" class="w-full input-cute p-4 text-2xl uppercase text-center font-black" placeholder="輸入單字...">
+                        <div id="s4-msg" class="text-pink-500 font-bold text-center mt-3 h-6"></div>
+                        <button id="btn-check-s4" class="btn-game btn-blue w-full py-4 mt-2">破解解碼 🔓</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 關卡 5 (ASCII) -->
+        <section id="stage-5" class="w-full max-w-4xl hidden">
+            <div class="glass-card p-6 sm:p-8 relative">
+                <div class="absolute top-0 right-0 bg-yellow-400 text-yellow-900 font-bold px-4 py-1 rounded-bl-2xl rounded-tr-xl">STAGE 5</div>
+                <h2 class="text-2xl font-bold text-gray-800 border-b-2 border-gray-100 pb-4 mb-6">🕵️‍♂️ ASCII 雙重解碼</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/ASCII-Table-wide.svg/1200px-ASCII-Table-wide.svg.png" class="w-full rounded-xl">
+                    <div class="flex flex-col justify-center space-y-4">
+                        <div class="bg-pink-50 p-4 rounded-2xl">
+                            <div class="text-sm font-bold text-pink-700">01001000 01001001</div>
+                            <input type="text" id="s5-q1" class="w-full input-cute p-2 mt-2 text-center" placeholder="輸入文字">
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-2xl">
+                            <div class="text-sm font-bold text-blue-700">72 69 76 80</div>
+                            <input type="text" id="s5-q2" class="w-full input-cute p-2 mt-2 text-center" placeholder="輸入文字">
+                        </div>
+                        <div id="s5-msg" class="text-red-500 font-bold text-center h-6"></div>
+                        <button id="btn-check-s5" class="btn-game w-full py-4">提交答案 🎯</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 關卡 6 (密室) -->
+        <section id="stage-6" class="w-full max-w-4xl hidden">
+            <div class="glass-card p-6 sm:p-8 relative">
+                <div class="absolute top-0 right-0 bg-red-500 text-white font-bold px-4 py-1 rounded-bl-2xl rounded-tr-xl">STAGE 6</div>
+                <h2 class="text-2xl font-bold text-center mb-6">🔐 終極密室逃脫</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-blue-50 p-4 rounded-xl border border-blue-200">
+                        <h3 class="font-bold mb-2">線索 1：數值</h3>
+                        <p class="font-mono text-xl">1+2+4+8 = ?</p>
+                    </div>
+                    <div class="bg-pink-50 p-4 rounded-xl border border-pink-200">
+                        <h3 class="font-bold mb-2">線索 2：字母</h3>
+                        <p class="font-mono text-xl">01000001 = ?</p>
+                    </div>
+                    <div class="bg-purple-50 p-4 rounded-xl border border-purple-200 md:col-span-2">
+                        <h3 class="font-bold mb-2">線索 3：訊號</h3>
+                        <p class="font-mono text-xl tracking-widest">... --- ...</p>
+                    </div>
+                </div>
+                <input type="text" id="s6-input" class="w-full input-cute p-4 text-center text-3xl font-black uppercase" placeholder="輸入組合密碼">
+                <div id="s6-msg" class="text-pink-500 font-bold text-center mt-2 h-6"></div>
+                <button id="btn-check-s6" class="btn-game w-full py-4 mt-4">解鎖大門 🚪</button>
+            </div>
+        </section>
+
+        <!-- 關卡 7 (影片) -->
+        <section id="stage-7" class="w-full max-w-4xl hidden">
+            <div class="glass-card p-6 sm:p-8 relative">
+                <div class="absolute top-0 right-0 bg-teal-500 text-white font-bold px-4 py-1 rounded-bl-2xl rounded-tr-xl">FINAL</div>
+                <h2 class="text-2xl font-bold mb-6">🎬 影像情報分析</h2>
+                <div class="video-container mb-6">
                     <iframe src="https://drive.google.com/file/d/1NQGA0c-130KV-wgRPYW7cTtsNdBZU9W3/preview"></iframe>
                 </div>
-                <input type="text" id="s7-input" class="input-cute p-3 w-full mb-4" placeholder="輸入影片密碼">
-                <button id="btn-check-s7" class="btn-game px-8 py-3 w-full">完成任務</button>
+                <input type="text" id="s7-input" class="input-cute w-full p-4 text-center text-2xl" placeholder="輸入影片密碼...">
+                <button id="btn-check-s7" class="btn-game w-full py-4 mt-4">完成任務 🎉</button>
+                <div id="s7-msg" class="text-pink-500 font-bold text-center mt-2 h-6"></div>
             </div>
         </section>
 
+        <!-- 任務完成 -->
         <section id="stage-result" class="w-full max-w-md glass-card p-8 text-center hidden border-4 border-yellow-300">
-            <h1 class="text-4xl font-black text-pink-500 mb-4">任務達成！</h1>
-            <p class="font-bold text-gray-600 mb-6">您的通關時間：<span id="res-time" class="text-2xl text-blue-500"></span></p>
-            <p id="res-status" class="text-sm text-yellow-600 mb-6">成績同步中...</p>
+            <div class="text-8xl mb-4 animate-bounce">🏆</div>
+            <h1 class="text-4xl font-black text-pink-500 mb-2">任務達成！</h1>
+            <div class="bg-white p-6 rounded-3xl shadow-inner text-left font-bold space-y-2 mb-6">
+                <p>情報員：<span id="res-name" class="text-blue-600"></span></p>
+                <p>通關時間：<span id="res-time" class="text-pink-500"></span></p>
+                <p id="res-status" class="text-xs text-yellow-600">傳送中... ⏳</p>
+            </div>
             <button onclick="location.reload()" class="bg-gray-200 px-6 py-2 rounded-full font-bold">返回首頁</button>
         </section>
 
     </main>
 
+    <audio id="sfx-success" src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3"></audio>
+    <audio id="sfx-error" src="https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3"></audio>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+
             const config = {
+                totalStages: 7,
                 gasUrl: 'https://script.google.com/macros/s/AKfycbxRal62HC5AgmpL3t0mq-65D2oHXF8HNqtfRaGwdkL1cHi5FOQ1aA_ObhonqMO7quUw/exec'
             };
 
             const state = {
                 classId: '', seat: '', name: '',
-                startTime: null, totalSeconds: 0,
-                currentStage: 0
+                startTime: null, timerInterval: null, totalSeconds: 0,
+                currentStage: 0,
+                scores: { s1: 0, s2: 0 }
             };
 
             const $ = id => document.getElementById(id);
 
-            // --- 排行榜抓取功能 ---
+            // 排行榜功能
             async function fetchLeaderboard() {
                 try {
-                    // GAS 需要實作 doGet 來回傳資料
                     const response = await fetch(`${config.gasUrl}?action=getLeaderboard`);
                     const data = await response.json();
                     renderLeaderboard(data);
                 } catch (e) {
-                    // 如果 GAS 尚未支援 action=getLeaderboard，則顯示模擬資料或清空
-                    console.log("無法取得排行資料:", e);
-                    $('leaderboard-loading').innerHTML = "暫無排行紀錄";
+                    console.error("無法取得排行:", e);
+                    $('leaderboard-loading').innerHTML = "暫無排行紀錄，快來搶佔第一名！";
                 }
             }
 
@@ -239,7 +425,7 @@
                 const body = $('leaderboard-body');
                 body.innerHTML = '';
                 if (!data || data.length === 0) {
-                    $('leaderboard-loading').innerHTML = "虛位以待，快來挑戰！";
+                    $('leaderboard-loading').innerHTML = "目前還沒有紀錄喔！";
                     return;
                 }
 
@@ -248,8 +434,8 @@
                     row.className = "border-b border-gray-50 hover:bg-blue-50 transition";
                     row.innerHTML = `
                         <td class="py-3 pl-2">${idx + 1}</td>
-                        <td class="py-3">${entry.name} <span class="text-[10px] text-gray-400 font-normal">(${entry.class})</span></td>
-                        <td class="py-3 text-right pr-2 text-pink-500">${formatTime(entry.time)}</td>
+                        <td class="py-3">${entry.name} <span class="text-[10px] text-gray-400">(${entry.class})</span></td>
+                        <td class="py-3 text-right pr-2 text-pink-500 font-mono">${formatTime(entry.time)}</td>
                     `;
                     body.appendChild(row);
                 });
@@ -258,11 +444,42 @@
                 $('leaderboard-table').classList.remove('hidden');
             }
 
-            // --- 初始化與基礎邏輯 ---
+            // 基礎驗證
+            const verifyAns = (input, hash, sensitive = false) => {
+                const proc = sensitive ? input : input.toUpperCase();
+                return btoa(encodeURIComponent(proc)) === hash;
+            };
+
+            function playSfx(type) {
+                const audio = type === 'success' ? $('sfx-success') : $('sfx-error');
+                audio.currentTime = 0;
+                audio.play().catch(() => {});
+            }
+
             function formatTime(sec) {
                 const m = Math.floor(sec / 60).toString().padStart(2, '0');
                 const s = (sec % 60).toString().padStart(2, '0');
                 return `${m}:${s}`;
+            }
+
+            function showMsg(id, msg, isError = true) {
+                const el = $(id);
+                el.textContent = msg;
+                if(isError) playSfx('error');
+                setTimeout(() => el.textContent = '', 3000);
+            }
+
+            // 遊戲進程控制
+            function switchStage(n) {
+                document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+                state.currentStage = n;
+                const target = $(`stage-${n}`);
+                if(target) target.classList.remove('hidden');
+                
+                if(n === 1) initStage1();
+                if(n === 2) initStage2();
+                
+                $('nav-stage').textContent = `${n}/7`;
             }
 
             $('btn-start').onclick = () => {
@@ -270,81 +487,182 @@
                 state.seat = $('input-seat').value.trim();
                 state.name = $('input-name').value.trim();
                 if(!state.classId || !state.seat || !state.name) return alert("請填寫資料！");
-                
-                state.startTime = Date.now();
+
                 $('top-nav').classList.remove('hidden');
                 $('nav-agent-name').textContent = state.name;
-                setInterval(() => {
+                state.startTime = Date.now();
+                state.timerInterval = setInterval(() => {
                     state.totalSeconds = Math.floor((Date.now() - state.startTime) / 1000);
                     $('nav-time').textContent = formatTime(state.totalSeconds);
                 }, 1000);
 
+                playSfx('success');
                 switchStage(1);
             };
 
-            function switchStage(n) {
-                document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
-                const next = $(`stage-${n}`);
-                if(next) next.classList.remove('hidden');
-                state.currentStage = n;
-                if(n === 1) initS1();
-            }
-
-            // --- 第一關簡化示範 ---
-            let s1Target = 0;
-            function initS1() {
-                s1Target = Math.floor(Math.random() * 50) + 1;
-                $('s1-target').textContent = s1Target;
+            // 關卡 1
+            let s1Target = 0, s1Count = 0;
+            function initStage1() {
+                s1Count = 0;
+                $('s1-progress').textContent = s1Count;
                 const container = $('bit-switches-container');
                 container.innerHTML = '';
-                [16, 8, 4, 2, 1].forEach(v => {
-                    const btn = document.createElement('div');
-                    btn.className = "bit-switch";
-                    btn.dataset.val = v;
-                    btn.innerHTML = `<div class="bit-led"></div>`;
-                    btn.onclick = () => {
-                        btn.classList.toggle('on');
+                [128, 64, 32, 16, 8, 4, 2, 1].forEach(v => {
+                    const wrap = document.createElement('div');
+                    wrap.className = "flex flex-col items-center gap-2";
+                    wrap.innerHTML = `<span class="text-xs font-mono font-bold">${v}</span>`;
+                    const sw = document.createElement('div');
+                    sw.className = "bit-switch";
+                    sw.dataset.val = v;
+                    sw.innerHTML = `<div class="bit-led"></div>`;
+                    sw.onclick = () => {
+                        sw.classList.toggle('on');
                         checkS1();
                     };
-                    container.appendChild(btn);
+                    wrap.appendChild(sw);
+                    container.appendChild(wrap);
                 });
+                genS1();
             }
-
+            function genS1() {
+                s1Target = Math.floor(Math.random() * 200) + 1;
+                $('s1-target').textContent = s1Target;
+                document.querySelectorAll('.bit-switch').forEach(s => s.classList.remove('on'));
+                $('s1-current').textContent = 0;
+            }
             function checkS1() {
                 let sum = 0;
-                document.querySelectorAll('.bit-switch.on').forEach(b => sum += parseInt(b.dataset.val));
+                document.querySelectorAll('.bit-switch.on').forEach(s => sum += parseInt(s.dataset.val));
                 $('s1-current').textContent = sum;
                 if(sum === s1Target) {
-                    setTimeout(() => switchStage(7), 1000); // 跳到最後示範
+                    s1Count++;
+                    $('s1-progress').textContent = s1Count;
+                    playSfx('success');
+                    if(s1Count >= 5) setTimeout(() => switchStage(2), 500);
+                    else setTimeout(genS1, 500);
                 }
             }
 
-            // --- 最後一關與資料上傳 ---
-            $('btn-check-s7').onclick = () => {
-                if($('s7-input').value.toLowerCase() === 'hint') {
-                    switchStage('result');
-                    $('res-time').textContent = formatTime(state.totalSeconds);
-                    sendData();
-                } else {
-                    alert("密碼不對喔！");
-                }
+            // 關卡 2 (比大小)
+            function initStage2() {
+                const questions = [
+                    { q: "512 MB v.s. 1 GB，誰大？", opts: ["512 MB", "1 GB"], a: "MQ==" },
+                    { q: "100 Mbps v.s. 10 MB/s，誰快？", opts: ["100 Mbps", "10 MB/s"], a: "MA==" }
+                ];
+                const container = $('s2-question-container');
+                container.innerHTML = '';
+                questions.forEach((item, idx) => {
+                    let h = `<div class="bg-white p-4 rounded-xl border-2 border-gray-100"><p class="font-bold mb-3">${item.q}</p><div class="flex gap-2">`;
+                    item.opts.forEach((o, oi) => {
+                        h += `<label class="radio-card flex-1 text-center" data-idx="${idx}" data-val="${oi}">
+                                <input type="radio" name="q${idx}" value="${oi}"><span>${o}</span>
+                              </label>`;
+                    });
+                    h += `</div></div>`;
+                    container.innerHTML += h;
+                });
+                document.querySelectorAll('.radio-card').forEach(r => {
+                    r.onclick = function() {
+                        document.querySelectorAll(`.radio-card[data-idx="${this.dataset.idx}"]`).forEach(el => el.classList.remove('selected'));
+                        this.classList.add('selected');
+                        this.querySelector('input').checked = true;
+                    }
+                });
+            }
+            $('btn-check-s2').onclick = () => {
+                const hashes = ["MQ==", "MA=="];
+                let ok = true;
+                [0, 1].forEach(i => {
+                    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+                    if(!sel || !verifyAns(sel.value, hashes[i])) ok = false;
+                });
+                if(ok) { playSfx('success'); switchStage(3); }
+                else showMsg('s2-msg', '算錯囉！');
             };
 
-            function sendData() {
-                const payload = {
+            // 關卡 3 (字母)
+            let s3Tested = new Set();
+            $('s3-input').oninput = (e) => {
+                const val = e.target.value.toUpperCase();
+                if(val && /[A-Z]/.test(val)) {
+                    const code = val.charCodeAt(0);
+                    $('s3-dec').textContent = code;
+                    $('s3-bin').textContent = code.toString(2).padStart(8, '0');
+                    s3Tested.add(val);
+                    $('s3-count').textContent = s3Tested.size;
+                    if(s3Tested.size >= 3) $('s3-next-btn').classList.remove('hidden');
+                }
+            };
+            $('s3-next-btn').onclick = () => { playSfx('success'); switchStage(4); };
+
+            // 關卡 4 (摩斯)
+            $('btn-play-morse').onclick = () => {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const play = (t, d) => {
+                    const o = ctx.createOscillator();
+                    const g = ctx.createGain();
+                    o.connect(g); g.connect(ctx.destination);
+                    o.start(t); o.stop(t + d);
+                };
+                let now = ctx.currentTime;
+                // HELLO: .... . .-.. .-.. ---
+                const seq = [0.1, 0.1, 0.1, 0.1, 0.2, 0.1, 0.3, 0.1, 0.1, 0.1, 0.2, 0.1, 0.3, 0.1, 0.1, 0.1, 0.2, 0.3, 0.3, 0.3];
+                seq.forEach(s => { play(now, s); now += s + 0.1; });
+            };
+            $('btn-check-s4').onclick = () => {
+                if(verifyAns($('s4-input').value, "SEVMTE8=")) { playSfx('success'); switchStage(5); }
+                else showMsg('s4-msg', '拼錯了喔！');
+            };
+
+            // 關卡 5 (ASCII)
+            $('btn-check-s5').onclick = () => {
+                if(verifyAns($('s5-q1').value, "SEk=") && verifyAns($('s5-q2').value, "SEVMUA==")) { playSfx('success'); switchStage(6); }
+                else showMsg('s5-msg', '密碼不正確！');
+            };
+
+            // 關卡 6 (密室)
+            $('btn-check-s6').onclick = () => {
+                // 15ASOS
+                if(verifyAns($('s6-input').value, "MTVBU09T")) { playSfx('success'); switchStage(7); }
+                else showMsg('s6-msg', '最終密碼有誤！');
+            };
+
+            // 關卡 7 (影片)
+            $('btn-check-s7').onclick = () => {
+                // hint (修正後的正確答案)
+                if(verifyAns($('s7-input').value, "aGludA==", true)) {
+                    playSfx('success');
+                    clearInterval(state.timerInterval);
+                    finish();
+                } else showMsg('s7-msg', '影片裡的密碼是什麼呢？');
+            };
+
+            function finish() {
+                switchStage('result');
+                $('res-name').textContent = state.name;
+                $('res-time').textContent = formatTime(state.totalSeconds);
+                
+                const data = {
                     class: state.classId, seat: state.seat, name: state.name,
                     totalTime: state.totalSeconds
                 };
+
                 fetch(config.gasUrl, {
                     method: 'POST', mode: 'no-cors',
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify(data)
                 }).then(() => {
-                    $('res-status').textContent = "上傳成功！";
-                    $('res-status').className = "text-green-500 font-bold";
+                    $('res-status').textContent = "上傳成功！成績已進入情報庫。";
+                    $('res-status').className = "text-xs text-green-600 font-bold";
                 });
             }
 
-            // 啟動時讀取排行榜
+            // 初始化與排行榜重新整理
+            $('btn-refresh-leaderboard').onclick = () => {
+                $('leaderboard-table').classList.add('hidden');
+                $('leaderboard-loading').classList.remove('hidden');
+                fetchLeaderboard();
+            };
+
             fetchLeaderboard();
         });
     </script>
