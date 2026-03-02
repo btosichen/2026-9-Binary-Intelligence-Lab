@@ -185,6 +185,7 @@
 
     <main class="flex-grow flex items-center justify-center p-4 z-10 relative mt-4 mb-10">
         
+        <!-- 首頁 -->
         <section id="stage-0" class="w-full max-w-md glass-card p-8 text-center relative overflow-hidden">
             <div class="absolute -top-10 -right-10 text-9xl opacity-10">🧠</div>
             <div class="mb-8 relative z-10">
@@ -417,19 +418,21 @@
 
                     <div class="bg-purple-50 border-2 border-purple-200 p-5 rounded-3xl relative md:col-span-2 transform hover:-translate-y-1 transition">
                          <div class="absolute -top-4 right-1/2 text-4xl">📎</div>
-                         <h3 class="font-bold text-purple-800 text-lg mb-2">線索 3：圖片隱藏訊息</h3>
-                         <p class="text-sm text-purple-600 mb-4 font-bold">點擊下方按鈕查看圖片，找出裡面的神秘單字：</p>
+                         <h3 class="font-bold text-purple-800 text-lg mb-2">線索 3：隱藏訊息</h3>
+                         <p class="text-sm text-purple-600 mb-4 font-bold">點擊下方按鈕查看圖片，找出裡面的神秘單字，或解讀旁邊的神秘訊號：</p>
+                         
                          <div class="flex flex-col sm:flex-row gap-4">
                              <a href="https://drive.google.com/file/d/1bkLNfuG5UTS-JBrMvAEELWa1IYp_r-uT/view?usp=sharing" target="_blank" class="bg-white border-2 border-purple-200 hover:border-purple-400 text-purple-700 font-bold px-4 py-4 rounded-2xl flex-1 flex flex-col items-center justify-center transition shadow-sm hover:shadow-md">
                                  <span class="text-3xl mb-1">🖼️</span>
                                  <span>查看圖片 1</span>
                              </a>
-                             <a href="https://lh7-rt.googleusercontent.com/formsz/AN7BsVD5YW77xJJG-vVZzV4FI47UXx15lJyDci4PAKfGBjw4VCKHCL8d-Lh_BS91saUR2Phgy-wfSVdBsktapRmsg11KXvHPlD4gNdELPv4iTQY8A1_xII1pF6gyfZbB-nq6oYU5FP6BGwy2RR2tOKrQ9kWucSQ4tblTiFCPgb4eCAz5dmp8Gji1LzszP0EBCqpVni7z8NyGB6D0xSU=w740" target="_blank" class="bg-white border-2 border-purple-200 hover:border-purple-400 text-purple-700 font-bold px-4 py-4 rounded-2xl flex-1 flex flex-col items-center justify-center transition shadow-sm hover:shadow-md">
-                                <span class="text-3xl mb-1">🧩</span>
-                                <span>查看圖片 2</span>
-                            </a>
+                             
+                             <div class="bg-gray-800 border-2 border-gray-700 text-green-400 font-bold px-4 py-4 rounded-2xl flex-1 flex flex-col items-center justify-center shadow-inner relative overflow-hidden">
+                                <div class="absolute inset-0 bg-black opacity-20"></div>
+                                <span class="text-4xl mb-1 font-mono tracking-widest relative z-10 drop-shadow-[0_0_8px_rgba(74,222,128,0.5)]">... --- ...</span>
+                                <span class="text-xs text-gray-400 relative z-10 tracking-widest mt-1 uppercase">Received Signal</span>
+                            </div>
                          </div>
-                         <div class="mt-4 text-sm text-purple-500 font-bold text-center bg-purple-100 p-2 rounded-lg">⭐ 提示：若圖片解出來是「SOS」，請將它放入密碼組合中。</div>
                     </div>
                 </div>
 
@@ -464,7 +467,7 @@
                 <div class="bg-white p-6 rounded-3xl shadow-sm border-2 border-gray-100 relative z-10">
                     <label class="block text-teal-600 font-black text-lg mb-2 text-center">🏆 輸入影片中的密碼：</label>
                     <div class="flex flex-col md:flex-row gap-4 items-center">
-                        <input type="text" id="s7-input" class="input-cute w-full p-4 text-2xl text-center uppercase font-black text-teal-700 tracking-wider" placeholder="輸入密碼...">
+                        <input type="text" id="s7-input" class="input-cute w-full p-4 text-2xl text-center font-bold text-teal-700 tracking-wider" placeholder="輸入密碼...">
                         <button id="btn-check-s7" class="btn-game bg-gradient-to-r from-teal-400 to-emerald-500 shadow-[0_6px_0_#047857] hover:shadow-[0_8px_0_#047857] active:shadow-[0_0_0_#047857] px-8 py-4 text-xl whitespace-nowrap w-full md:w-auto">完成任務 🎉</button>
                     </div>
                     <div id="s7-msg" class="text-pink-500 font-bold text-center mt-3 h-6"></div>
@@ -510,11 +513,6 @@
     <audio id="sfx-error" src="https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3"></audio>
 
     <script>
-        // ==========================================
-        // 【防弊機制強化】
-        // 使用 IIFE (立即執行函數) 搭配 DOMContentLoaded 
-        // 將所有變數與邏輯封裝在閉包內，防止學生透過 F12 竄改資料
-        // ==========================================
         document.addEventListener('DOMContentLoaded', () => {
 
             const config = {
@@ -531,10 +529,12 @@
 
             const $ = id => document.getElementById(id);
 
-            // 輔助解密驗證函數 (比較 Base64)
-            const verifyAns = (input, expectedHash) => btoa(encodeURIComponent(input)) === expectedHash;
+            // 驗證輸入（如果是 base64 雜湊則進行比對，或者直接明文比對）
+            const verifyAns = (input, expectedHash, sensitive = false) => {
+                const processedInput = sensitive ? input : input.toUpperCase();
+                return btoa(encodeURIComponent(processedInput)) === expectedHash;
+            };
 
-            // --- 綁定 UI 事件 ---
             $('btn-start').addEventListener('click', startGame);
             $('btn-check-s2').addEventListener('click', checkStage2);
             $('s3-input').addEventListener('input', updateStage3);
@@ -546,7 +546,6 @@
             $('btn-check-s7').addEventListener('click', checkStage7);
             $('btn-reload').addEventListener('click', () => location.reload());
 
-            // --- 共用函數 ---
             function playSfx(type) {
                 const audio = type === 'success' ? $('sfx-success') : $('sfx-error');
                 audio.currentTime = 0;
@@ -601,7 +600,6 @@
                 setTimeout(() => switchStage(state.currentStage + 1), 400);
             }
 
-            // --- Stage 0: 登入 ---
             function startGame() {
                 state.classId = $('input-class').value.trim();
                 state.seat = $('input-seat').value.trim();
@@ -624,7 +622,6 @@
                 nextStage();
             }
 
-            // --- Stage 1: 二進位 ---
             let s1Target = 0, s1Count = 0;
             const weights = [128, 64, 32, 16, 8, 4, 2, 1];
             
@@ -650,7 +647,7 @@
                     btn.dataset.val = w;
                     btn.dataset.state = 0;
                     btn.innerHTML = `<div class="bit-led"></div>`;
-                    btn.onclick = () => toggleBit(btn); // 封裝在閉包內，外部無法呼叫
+                    btn.onclick = () => toggleBit(btn);
 
                     wrapper.appendChild(label);
                     wrapper.appendChild(btn);
@@ -697,14 +694,11 @@
                 }
             }
 
-            // --- Stage 2: 容量 ---
-            // 題目不含明文答案
             const s2Questions = [
                 { q: "請問哪一個容量比較大？", options: ["512 MB", "1 GB"] },
                 { q: "請問哪一個傳輸速率比較快？", options: ["100 Mbps", "10 MB/s"] },
                 { q: "下載一個 500 MB 的遊戲檔案，家裡網速是 50 Mbps，大約需要多少時間？", options: ["10 秒", "80 秒", "100 秒"] }
             ];
-            // 以 Base64 加密的答案 index
             const s2Hashes = ['MQ==', 'MA==', 'MQ==']; 
 
             function initStage2() {
@@ -722,7 +716,6 @@
                     container.innerHTML += html;
                 });
 
-                // 動態綁定單選題 UI 效果
                 document.querySelectorAll('.s2-radio').forEach(label => {
                     label.addEventListener('click', function() {
                         const groupName = this.dataset.group;
@@ -750,7 +743,6 @@
                 }
             }
 
-            // --- Stage 3: 文字數位化 ---
             let s3Tested = new Set();
             function updateStage3() {
                 const input = $('s3-input').value.toUpperCase();
@@ -771,8 +763,7 @@
                 }
             }
 
-            // --- Stage 4: 摩斯密碼 ---
-            const s4Hash = "SEVMTE8="; // 加密答案
+            const s4Hash = "SEVMTE8="; 
             const AudioContext = window.AudioContext || window.webkitAudioContext;
             let audioCtx;
 
@@ -822,7 +813,6 @@
                 }
             }
 
-            // --- Stage 5: ASCII ---
             const s5Q1Hash = "SEk=";
             const s5Q2Hash = "SEVMUA==";
 
@@ -837,7 +827,6 @@
                 }
             }
 
-            // --- Stage 6: 密室逃脫 ---
             const s6Hash = "MTVBU09T";
 
             function checkStage6() {
@@ -849,19 +838,18 @@
                 }
             }
 
-            // --- Stage 7: 影片解碼 ---
-            const s7Hash = "QklOQVJZ"; 
+            // 第七關答案修正：小寫 hint
+            const s7Hash = "aGludA=="; // "hint" 的 base64
 
             function checkStage7() {
-                const ans = $('s7-input').value.toUpperCase().trim();
-                if(verifyAns(ans, s7Hash)) {
+                const ans = $('s7-input').value.trim(); // 不強制轉大寫
+                if(verifyAns(ans, s7Hash, true)) { // 第三參數 true 代表區分大小寫
                     nextStage(); 
                 } else {
                     showMsg('s7-msg', '答案不對喔，仔細看影片裡的提示！');
                 }
             }
 
-            // --- 結算與傳送資料 ---
             function finishGame() {
                 clearInterval(state.timerInterval);
                 $('top-nav').classList.add('hidden');
@@ -904,7 +892,7 @@
                 });
             }
 
-        }); // 結束 DOMContentLoaded 閉包
+        });
     </script>
 </body>
 </html>
