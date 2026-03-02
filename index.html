@@ -17,7 +17,6 @@
 
         body {
             font-family: 'Noto Sans TC', sans-serif;
-            /* 鮮豔動態漸層背景 */
             background: linear-gradient(-45deg, #ff9a9e, #fecfef, #a1c4fd, #c2e9fb);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
@@ -75,7 +74,6 @@
         .btn-blue:hover { box-shadow: 0 8px 0 #0055B3, 0 15px 25px rgba(0, 194, 255, 0.4); }
         .btn-blue:active { transform: translateY(6px); box-shadow: 0 0px 0 #0055B3; }
 
-        /* 輸入框樣式 */
         .input-cute {
             background: white;
             border: 3px solid #E2E8F0;
@@ -90,7 +88,6 @@
             box-shadow: 0 0 0 4px rgba(0, 194, 255, 0.2);
         }
 
-        /* 8-bit 立體開關 */
         .bit-switch {
             width: 45px; height: 60px;
             background-color: #F1F5F9;
@@ -121,7 +118,6 @@
             transition: all 0.2s;
         }
 
-        /* 自訂單選按鈕 (Radio) 卡片 */
         .radio-card input[type="radio"] { display: none; }
         .radio-card {
             background: white;
@@ -135,7 +131,6 @@
         }
         .radio-card:hover { border-color: #93C5FD; background: #EFF6FF; }
         .radio-card input[type="radio"]:checked + span { color: #2563EB; }
-        /* 透過 JavaScript 切換 class 來達成選中效果 */
         .radio-card.selected {
             border-color: var(--secondary);
             background: #E0F2FE;
@@ -146,10 +141,9 @@
 
         .hidden { display: none !important; }
 
-        /* 響應式影片容器 */
         .video-container {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 */
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
             border-radius: 1rem;
@@ -160,25 +154,21 @@
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         }
 
-        /* 裝飾圖形 */
         .shape { position: fixed; z-index: -1; opacity: 0.5; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col font-sans">
     
-    <!-- 背景裝飾圖形 -->
     <div class="shape bg-yellow-300 w-32 h-32 rounded-full blur-2xl top-10 left-10"></div>
     <div class="shape bg-pink-400 w-48 h-48 rounded-full blur-3xl bottom-20 right-10"></div>
     <div class="shape bg-blue-400 w-40 h-40 rounded-full blur-3xl top-1/2 left-1/3"></div>
 
-    <!-- 頂部資訊列 (漂浮風格) -->
     <header class="p-4 sticky top-0 z-40 hidden" id="top-nav">
         <div class="max-w-4xl mx-auto glass-card px-6 py-3 flex justify-between items-center">
             <div class="font-cute text-2xl font-bold text-pink-500 flex items-center gap-2">
                 🎮 <span class="hidden sm:inline">MINERVA LAB</span>
             </div>
             
-            <!-- 進度條 -->
             <div class="flex-grow mx-4 max-w-xs hidden md:block">
                 <div class="h-4 bg-gray-200 rounded-full overflow-hidden border-2 border-white shadow-inner">
                     <div id="progress-bar" class="h-full bg-gradient-to-r from-green-400 to-blue-500 transition-all duration-500" style="width: 0%;"></div>
@@ -195,7 +185,6 @@
 
     <main class="flex-grow flex items-center justify-center p-4 z-10 relative mt-4 mb-10">
         
-        <!-- 登入畫面 (Stage 0) -->
         <section id="stage-0" class="w-full max-w-md glass-card p-8 text-center relative overflow-hidden">
             <div class="absolute -top-10 -right-10 text-9xl opacity-10">🧠</div>
             <div class="mb-8 relative z-10">
@@ -218,11 +207,17 @@
                     <label class="block text-gray-600 font-bold mb-1 ml-1">📛 姓名 (情報員代號)</label>
                     <input type="text" id="input-name" class="w-full input-cute p-3 text-lg" placeholder="輸入你的姓名">
                 </div>
-                <button onclick="startGame()" class="w-full mt-8 btn-game py-4 text-xl tracking-widest block">開始挑戰 START!</button>
+                <button id="btn-start" class="w-full mt-8 btn-game py-4 text-xl tracking-widest block">開始挑戰 START!</button>
+                
+                <div class="text-center mt-4">
+                    <a href="https://docs.google.com/spreadsheets/d/1M5beg7mPqOypRTMDMQhQX6R48m1uhFzYgveF1Jpt_Dg/edit?usp=sharing" target="_blank" class="inline-flex items-center gap-1 text-sm font-bold text-gray-500 hover:text-blue-600 transition bg-gray-50 hover:bg-blue-50 px-4 py-2 rounded-full border border-gray-200">
+                        📊 查看成績紀錄
+                    </a>
+                </div>
             </div>
         </section>
 
-        <!-- 關卡 1: 二進位復習 -->
+        <!-- 關卡 1 -->
         <section id="stage-1" class="w-full max-w-3xl hidden">
             <div class="glass-card p-6 sm:p-8 relative">
                 <div class="absolute top-0 right-0 bg-pink-500 text-white font-bold px-4 py-1 rounded-bl-2xl rounded-tr-xl">STAGE 1</div>
@@ -238,10 +233,7 @@
                     <div class="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500 font-mono" id="s1-target">128</div>
                 </div>
 
-                <!-- 8-bit 開關 -->
-                <div class="flex justify-center flex-wrap gap-2 sm:gap-4 mb-8" id="bit-switches-container">
-                    <!-- JS 動態生成 -->
-                </div>
+                <div class="flex justify-center flex-wrap gap-2 sm:gap-4 mb-8" id="bit-switches-container"></div>
 
                 <div class="text-center bg-gray-50 p-4 rounded-2xl border-2 border-dashed border-gray-200">
                     <div class="text-gray-500 font-bold">目前總和</div>
@@ -251,7 +243,7 @@
             </div>
         </section>
 
-        <!-- 關卡 2: 容量與傳輸速率 -->
+        <!-- 關卡 2 -->
         <section id="stage-2" class="w-full max-w-3xl hidden">
             <div class="glass-card p-6 sm:p-8 relative">
                 <div class="absolute top-0 right-0 bg-blue-500 text-white font-bold px-4 py-1 rounded-bl-2xl rounded-tr-xl">STAGE 2</div>
@@ -269,18 +261,16 @@
                     </div>
                 </div>
 
-                <div id="s2-question-container" class="space-y-6">
-                    <!-- 問題會由 JS 插入 -->
-                </div>
+                <div id="s2-question-container" class="space-y-6"></div>
 
                 <div class="mt-8 flex flex-col sm:flex-row justify-between items-center gap-4 border-t-2 border-gray-100 pt-6">
                     <div id="s2-msg" class="text-pink-500 font-bold h-6 flex-grow text-center sm:text-left"></div>
-                    <button onclick="checkStage2()" class="btn-game btn-blue px-8 py-3 w-full sm:w-auto">送出答案 🚀</button>
+                    <button id="btn-check-s2" class="btn-game btn-blue px-8 py-3 w-full sm:w-auto">送出答案 🚀</button>
                 </div>
             </div>
         </section>
 
-        <!-- 關卡 3: 文字數位化 -->
+        <!-- 關卡 3 -->
         <section id="stage-3" class="w-full max-w-3xl hidden">
             <div class="glass-card p-6 sm:p-8 relative">
                 <div class="absolute top-0 right-0 bg-purple-500 text-white font-bold px-4 py-1 rounded-bl-2xl rounded-tr-xl">STAGE 3</div>
@@ -290,7 +280,7 @@
                 <div class="bg-white p-6 rounded-3xl shadow-sm border-2 border-gray-100 flex flex-col md:flex-row gap-8 items-center justify-center">
                     <div class="text-center relative">
                         <label class="block text-pink-500 font-bold mb-2">輸入字母 (A-Z)</label>
-                        <input type="text" id="s3-input" maxlength="1" class="w-32 h-32 text-center text-7xl input-cute text-pink-500 uppercase font-black placeholder-gray-200" placeholder="?" oninput="updateStage3()">
+                        <input type="text" id="s3-input" maxlength="1" class="w-32 h-32 text-center text-7xl input-cute text-pink-500 uppercase font-black placeholder-gray-200" placeholder="?">
                     </div>
                     
                     <div class="hidden md:flex text-4xl text-gray-300 font-black animate-pulse">➔</div>
@@ -312,19 +302,18 @@
                     <div class="bg-gray-100 px-4 py-2 rounded-full font-bold text-gray-600 border border-gray-200">
                         已收集字母: <span id="s3-count" class="text-pink-500 text-xl font-black ml-1">0</span> / 3
                     </div>
-                    <button id="s3-next-btn" onclick="nextStage()" class="btn-game px-8 py-3 hidden">太酷了，繼續！ ✨</button>
+                    <button id="s3-next-btn" class="btn-game px-8 py-3 hidden">太酷了，繼續！ ✨</button>
                 </div>
             </div>
         </section>
 
-        <!-- 關卡 4: 摩斯密碼 -->
+        <!-- 關卡 4 -->
         <section id="stage-4" class="w-full max-w-4xl hidden">
             <div class="glass-card p-6 sm:p-8 relative">
                 <div class="absolute top-0 right-0 bg-orange-500 text-white font-bold px-4 py-1 rounded-bl-2xl rounded-tr-xl">STAGE 4</div>
                 <h2 class="text-2xl font-bold text-gray-800 border-b-2 border-gray-100 pb-4 mb-6 flex items-center gap-2">📻 攔截摩斯密碼</h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- 參考資料區 -->
                     <div class="space-y-4">
                         <div class="bg-white p-2 rounded-2xl shadow-sm border-2 border-gray-100 relative">
                             <span class="absolute top-2 left-2 bg-yellow-400 text-yellow-900 text-xs font-bold px-2 py-1 rounded z-10">對照表</span>
@@ -337,7 +326,6 @@
                         </div>
                     </div>
 
-                    <!-- 任務區 -->
                     <div class="flex flex-col justify-center">
                         <div class="bg-gray-800 p-6 rounded-3xl mb-6 text-center border-4 border-gray-700 relative overflow-hidden shadow-xl">
                             <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-transparent via-green-400 to-transparent opacity-50"></div>
@@ -345,7 +333,7 @@
                                 <span class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></span> 收到加密訊號
                             </div>
                             <div id="s4-morse-display" class="text-5xl font-black tracking-[0.2em] text-white mb-6 font-mono drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">.... . .-.. .-.. ---</div>
-                            <button onclick="playMorseSequence()" class="bg-green-500 hover:bg-green-400 text-green-900 font-bold px-6 py-3 rounded-full text-lg w-full flex items-center justify-center gap-2 transition-transform active:scale-95 shadow-[0_4px_0_#166534]">
+                            <button id="btn-play-morse" class="bg-green-500 hover:bg-green-400 text-green-900 font-bold px-6 py-3 rounded-full text-lg w-full flex items-center justify-center gap-2 transition-transform active:scale-95 shadow-[0_4px_0_#166534]">
                                 🔊 播放訊號聲音
                             </button>
                         </div>
@@ -355,14 +343,14 @@
                             <input type="text" id="s4-input" class="w-full input-cute p-4 text-2xl uppercase text-center font-black text-blue-600 tracking-wider" placeholder="輸入答案...">
                             
                             <div id="s4-msg" class="text-pink-500 font-bold text-center mt-3 h-6"></div>
-                            <button onclick="checkStage4()" class="btn-game btn-blue w-full py-4 mt-2 text-lg">破解解碼 🔓</button>
+                            <button id="btn-check-s4" class="btn-game btn-blue w-full py-4 mt-2 text-lg">破解解碼 🔓</button>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 關卡 5: ASCII 進階 -->
+        <!-- 關卡 5 -->
         <section id="stage-5" class="w-full max-w-4xl hidden">
             <div class="glass-card p-6 sm:p-8 relative">
                 <div class="absolute top-0 right-0 bg-yellow-400 text-yellow-900 font-bold px-4 py-1 rounded-bl-2xl rounded-tr-xl">STAGE 5</div>
@@ -377,7 +365,6 @@
                     </div>
 
                     <div class="flex flex-col justify-center space-y-6">
-                        <!-- Q1 -->
                         <div class="bg-pink-50 p-6 rounded-3xl border-2 border-pink-100 relative">
                             <span class="absolute -top-3 left-6 bg-pink-500 text-white font-bold px-3 py-1 rounded-full text-sm">任務 A</span>
                             <div class="text-sm text-pink-700 font-bold mb-2">二進位 轉 文字</div>
@@ -385,7 +372,6 @@
                             <input type="text" id="s5-q1" class="w-full input-cute p-3 text-center text-xl uppercase font-black" placeholder="輸入轉出來的文字">
                         </div>
                         
-                        <!-- Q2 -->
                         <div class="bg-blue-50 p-6 rounded-3xl border-2 border-blue-100 relative">
                             <span class="absolute -top-3 left-6 bg-blue-500 text-white font-bold px-3 py-1 rounded-full text-sm">任務 B</span>
                             <div class="text-sm text-blue-700 font-bold mb-2">十進制 轉 文字</div>
@@ -395,14 +381,14 @@
 
                         <div class="flex flex-col items-center">
                             <div id="s5-msg" class="text-red-500 font-bold text-center mb-2 h-6"></div>
-                            <button onclick="checkStage5()" class="btn-game w-full py-4 text-xl">提交答案 🎯</button>
+                            <button id="btn-check-s5" class="btn-game w-full py-4 text-xl">提交答案 🎯</button>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 關卡 6: 密室逃脫模式 -->
+        <!-- 關卡 6 -->
         <section id="stage-6" class="w-full max-w-4xl hidden">
             <div class="glass-card p-6 sm:p-8 relative border-4 border-yellow-300 shadow-[0_0_30px_rgba(253,224,71,0.5)]">
                 <div class="absolute top-0 right-0 bg-red-500 text-white font-bold px-4 py-1 rounded-bl-2xl rounded-tr-xl animate-pulse">STAGE 6</div>
@@ -410,7 +396,6 @@
                 <p class="text-gray-700 mb-6 font-bold text-center bg-yellow-50 p-3 rounded-xl">請結合所學，找出三個線索，組合出最終通關密碼！</p>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                    <!-- Clue 1 -->
                     <div class="bg-blue-50 border-2 border-blue-200 p-5 rounded-3xl relative transform hover:-translate-y-1 transition">
                         <div class="absolute -top-4 -right-2 text-4xl rotate-12">📌</div>
                         <h3 class="font-bold text-blue-800 text-lg mb-2">線索 1：二進位卡片</h3>
@@ -423,7 +408,6 @@
                         </div>
                     </div>
                     
-                    <!-- Clue 2 -->
                     <div class="bg-pink-50 border-2 border-pink-200 p-5 rounded-3xl relative transform hover:-translate-y-1 transition">
                         <div class="absolute -top-4 -right-2 text-4xl -rotate-12">📌</div>
                         <h3 class="font-bold text-pink-800 text-lg mb-2">線索 2：ASCII 密碼</h3>
@@ -431,7 +415,6 @@
                         <div class="font-mono text-pink-600 mt-4 text-4xl font-black text-center bg-white p-4 rounded-xl border border-pink-100">01000001</div>
                     </div>
 
-                    <!-- Clue 3 -->
                     <div class="bg-purple-50 border-2 border-purple-200 p-5 rounded-3xl relative md:col-span-2 transform hover:-translate-y-1 transition">
                          <div class="absolute -top-4 right-1/2 text-4xl">📎</div>
                          <h3 class="font-bold text-purple-800 text-lg mb-2">線索 3：圖片隱藏訊息</h3>
@@ -458,13 +441,13 @@
                     
                     <div class="mt-6 flex flex-col items-center">
                         <div id="s6-msg" class="text-pink-500 font-bold text-sm mb-2 h-6"></div>
-                        <button onclick="checkStage6()" class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-10 py-4 rounded-full font-black text-2xl tracking-widest transition shadow-[0_6px_0_#b45309] hover:shadow-[0_8px_0_#b45309] hover:-translate-y-1 active:shadow-none active:translate-y-2 w-full sm:w-auto">解鎖大門 🚪</button>
+                        <button id="btn-check-s6" class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-10 py-4 rounded-full font-black text-2xl tracking-widest transition shadow-[0_6px_0_#b45309] hover:shadow-[0_8px_0_#b45309] hover:-translate-y-1 active:shadow-none active:translate-y-2 w-full sm:w-auto">解鎖大門 🚪</button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 關卡 7: 影片解碼 -->
+        <!-- 關卡 7 -->
         <section id="stage-7" class="w-full max-w-4xl hidden">
             <div class="glass-card p-6 sm:p-8 relative">
                 <div class="absolute top-0 right-0 bg-teal-500 text-white font-bold px-4 py-1 rounded-bl-2xl rounded-tr-xl">FINAL STAGE</div>
@@ -482,7 +465,7 @@
                     <label class="block text-teal-600 font-black text-lg mb-2 text-center">🏆 輸入影片中的密碼：</label>
                     <div class="flex flex-col md:flex-row gap-4 items-center">
                         <input type="text" id="s7-input" class="input-cute w-full p-4 text-2xl text-center uppercase font-black text-teal-700 tracking-wider" placeholder="輸入密碼...">
-                        <button onclick="checkStage7()" class="btn-game bg-gradient-to-r from-teal-400 to-emerald-500 shadow-[0_6px_0_#047857] hover:shadow-[0_8px_0_#047857] active:shadow-[0_0_0_#047857] px-8 py-4 text-xl whitespace-nowrap w-full md:w-auto">完成任務 🎉</button>
+                        <button id="btn-check-s7" class="btn-game bg-gradient-to-r from-teal-400 to-emerald-500 shadow-[0_6px_0_#047857] hover:shadow-[0_8px_0_#047857] active:shadow-[0_0_0_#047857] px-8 py-4 text-xl whitespace-nowrap w-full md:w-auto">完成任務 🎉</button>
                     </div>
                     <div id="s7-msg" class="text-pink-500 font-bold text-center mt-3 h-6"></div>
                 </div>
@@ -491,7 +474,6 @@
 
         <!-- 任務完成畫面 -->
         <section id="stage-result" class="w-full max-w-md glass-card p-8 text-center hidden relative overflow-hidden border-4 border-yellow-300">
-            <!-- 撒花特效背景 -->
             <div class="absolute inset-0 z-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
             
             <div class="relative z-10">
@@ -518,388 +500,411 @@
                     </div>
                 </div>
 
-                <button onclick="location.reload()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 px-6 rounded-full transition">返回首頁</button>
+                <button id="btn-reload" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 px-6 rounded-full transition">返回首頁</button>
             </div>
         </section>
 
     </main>
 
-    <!-- 音效元素 (保留使用免費無版權音效) -->
     <audio id="sfx-success" src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3"></audio>
     <audio id="sfx-error" src="https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3"></audio>
 
     <script>
-        // --- 系統設定與狀態 ---
-        const config = {
-            totalStages: 7,
-            gasUrl: 'https://script.google.com/macros/s/AKfycbx_8LLQoqF81ZqQZ3b7xuSv-YraWDcUiNDm3RY8PKxK-iDewZTPEHXXKUmUPAXvuvhD/exec' // ★★★ 老師請將 Google Apps Script 的 Web App URL 貼在這裡 ★★★
-        };
+        // ==========================================
+        // 【防弊機制強化】
+        // 使用 IIFE (立即執行函數) 搭配 DOMContentLoaded 
+        // 將所有變數與邏輯封裝在閉包內，防止學生透過 F12 竄改資料
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', () => {
 
-        const state = {
-            classId: '', seat: '', name: '',
-            startTime: null, timerInterval: null, totalSeconds: 0,
-            currentStage: 0,
-            scores: { s1: 0, s2: 0, s3: 0 }
-        };
-
-        const $ = id => document.getElementById(id);
-
-        function playSfx(type) {
-            const audio = type === 'success' ? $('sfx-success') : $('sfx-error');
-            audio.currentTime = 0;
-            audio.play().catch(e => console.log('Audio play failed:', e));
-        }
-
-        function showMsg(id, msg, isError = true) {
-            const el = $(id);
-            el.textContent = msg;
-            el.className = isError ? "h-6 mt-1 text-pink-500 font-bold text-center" : "h-6 mt-1 text-green-500 font-bold text-center";
-            if(isError) {
-                playSfx('error');
-                // 錯誤震動特效
-                $(id).parentElement.animate([
-                    { transform: 'translateX(0)' },
-                    { transform: 'translateX(-5px)' },
-                    { transform: 'translateX(5px)' },
-                    { transform: 'translateX(0)' }
-                ], { duration: 300 });
-            }
-            setTimeout(() => el.textContent = '', 3000);
-        }
-
-        function updateProgress() {
-            const pct = (state.currentStage / config.totalStages) * 100;
-            $('progress-bar').style.width = `${pct}%`;
-            $('nav-stage').textContent = `${state.currentStage}/${config.totalStages}`;
-        }
-
-        function formatTime(sec) {
-            const m = Math.floor(sec / 60).toString().padStart(2, '0');
-            const s = (sec % 60).toString().padStart(2, '0');
-            return `${m}:${s}`;
-        }
-
-        function switchStage(stageNum) {
-            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
-            state.currentStage = stageNum;
-            const target = $(`stage-${stageNum}`);
-            
-            if(target) {
-                target.classList.remove('hidden');
-                // 加入進場動畫
-                target.animate([{ opacity: 0, transform: 'translateY(20px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 400, easing: 'ease-out' });
-                updateProgress();
-            } else if (stageNum > config.totalStages) {
-                finishGame();
-            }
-
-            if(stageNum === 1) initStage1();
-            if(stageNum === 2) initStage2();
-        }
-
-        function nextStage() {
-            playSfx('success');
-            setTimeout(() => switchStage(state.currentStage + 1), 400);
-        }
-
-        // --- 登入邏輯 ---
-        function startGame() {
-            state.classId = $('input-class').value.trim();
-            state.seat = $('input-seat').value.trim();
-            state.name = $('input-name').value.trim();
-
-            if(!state.classId || !state.seat || !state.name) {
-                alert("⚠️ 請完整填寫班級、座號和姓名喔！");
-                return;
-            }
-
-            $('top-nav').classList.remove('hidden');
-            $('nav-agent-name').textContent = state.name;
-            
-            state.startTime = Date.now();
-            state.timerInterval = setInterval(() => {
-                state.totalSeconds = Math.floor((Date.now() - state.startTime) / 1000);
-                $('nav-time').textContent = formatTime(state.totalSeconds);
-            }, 1000);
-
-            nextStage();
-        }
-
-        // --- Stage 1: 二進位 ---
-        let s1Target = 0, s1Count = 0;
-        const weights = [128, 64, 32, 16, 8, 4, 2, 1];
-        
-        function initStage1() {
-            s1Count = 0;
-            $('s1-progress').textContent = s1Count;
-            renderSwitches();
-            generateS1Question();
-        }
-
-        function renderSwitches() {
-            const container = $('bit-switches-container');
-            container.innerHTML = '';
-            weights.forEach((w) => {
-                const wrapper = document.createElement('div');
-                wrapper.className = "flex flex-col items-center";
-                
-                const label = document.createElement('div');
-                label.className = "text-sm text-gray-500 font-bold font-mono mb-2 bg-white px-2 rounded-lg border border-gray-200 shadow-sm";
-                label.textContent = w;
-                
-                const btn = document.createElement('div');
-                btn.className = "bit-switch";
-                btn.dataset.val = w;
-                btn.dataset.state = 0;
-                btn.innerHTML = `<div class="bit-led"></div>`;
-                btn.onclick = () => toggleBit(btn);
-
-                wrapper.appendChild(label);
-                wrapper.appendChild(btn);
-                container.appendChild(wrapper);
-            });
-        }
-
-        function generateS1Question() {
-            s1Target = Math.floor(Math.random() * 255) + 1;
-            $('s1-target').textContent = s1Target;
-            document.querySelectorAll('.bit-switch').forEach(btn => {
-                btn.classList.remove('on');
-                btn.dataset.state = 0;
-            });
-            updateS1Sum();
-        }
-
-        function toggleBit(btn) {
-            const isOon = btn.dataset.state === '1';
-            btn.dataset.state = isOon ? '0' : '1';
-            btn.classList.toggle('on');
-            updateS1Sum();
-        }
-
-        function updateS1Sum() {
-            let sum = 0;
-            document.querySelectorAll('.bit-switch').forEach(btn => {
-                if(btn.dataset.state === '1') sum += parseInt(btn.dataset.val);
-            });
-            $('s1-current').textContent = sum;
-
-            if(sum === s1Target) {
-                state.scores.s1++;
-                s1Count++;
-                $('s1-progress').textContent = s1Count;
-                showMsg('s1-msg', '答對了！太厲害啦 👏', false);
-                playSfx('success');
-                
-                if(s1Count >= 5) {
-                    setTimeout(() => nextStage(), 1000);
-                } else {
-                    setTimeout(generateS1Question, 1000);
-                }
-            }
-        }
-
-        // --- Stage 2: 容量 ---
-        const s2Questions = [
-            { q: "請問哪一個容量比較大？", options: ["512 MB", "1 GB"], ans: 1 },
-            { q: "請問哪一個傳輸速率比較快？", options: ["100 Mbps", "10 MB/s"], ans: 0 },
-            { q: "下載一個 500 MB 的遊戲檔案，家裡網速是 50 Mbps，大約需要多少時間？", options: ["10 秒", "80 秒", "100 秒"], ans: 1 }
-        ];
-
-        function initStage2() {
-            const container = $('s2-question-container');
-            container.innerHTML = '';
-            s2Questions.forEach((item, qIdx) => {
-                let html = `<div class="bg-white p-5 rounded-2xl border-2 border-gray-100 shadow-sm"><p class="text-gray-800 font-bold mb-4 text-lg">Q${qIdx+1}: ${item.q}</p><div class="flex flex-col sm:flex-row gap-3">`;
-                item.options.forEach((opt, oIdx) => {
-                    html += `<label class="radio-card flex-1 text-center" onclick="selectRadio(this, 's2-q${qIdx}')">
-                                <input type="radio" name="s2-q${qIdx}" value="${oIdx}">
-                                <span>${opt}</span>
-                             </label>`;
-                });
-                html += `</div></div>`;
-                container.innerHTML += html;
-            });
-        }
-
-        // 處理單選題的視覺效果
-        function selectRadio(element, groupName) {
-            document.querySelectorAll(`input[name="${groupName}"]`).forEach(radio => {
-                radio.parentElement.classList.remove('selected');
-            });
-            element.classList.add('selected');
-        }
-
-        function checkStage2() {
-            let allCorrect = true;
-            s2Questions.forEach((item, qIdx) => {
-                const selected = document.querySelector(`input[name="s2-q${qIdx}"]:checked`);
-                if(!selected || parseInt(selected.value) !== item.ans) {
-                    allCorrect = false;
-                }
-            });
-
-            if(allCorrect) {
-                state.scores.s2 = 100;
-                nextStage();
-            } else {
-                showMsg('s2-msg', '哎呀，有地方算錯囉！再仔細想想單位的換算。');
-            }
-        }
-
-        // --- Stage 3: 文字數位化 ---
-        let s3Tested = new Set();
-        function updateStage3() {
-            const input = $('s3-input').value.toUpperCase();
-            if(input.length === 1 && /[A-Z]/.test(input)) {
-                const dec = input.charCodeAt(0);
-                const bin = dec.toString(2).padStart(8, '0');
-                $('s3-dec').textContent = dec;
-                $('s3-bin').textContent = bin;
-                
-                s3Tested.add(input);
-                $('s3-count').textContent = s3Tested.size;
-                if(s3Tested.size >= 3) {
-                    $('s3-next-btn').classList.remove('hidden');
-                }
-            } else {
-                $('s3-dec').textContent = '---';
-                $('s3-bin').textContent = '--------';
-            }
-        }
-
-        // --- Stage 4: 摩斯密碼 ---
-        const s4TargetWord = "HELLO"; 
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        let audioCtx;
-
-        function playTone(duration) {
-            if (!audioCtx) audioCtx = new AudioContext();
-            const osc = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            osc.type = 'sine';
-            osc.frequency.value = 600; 
-            osc.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            
-            osc.start();
-            gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
-            osc.stop(audioCtx.currentTime + duration);
-        }
-
-        function playMorseSequence() {
-            const sequence = $('s4-morse-display').textContent;
-            const dotLen = 0.1; 
-            const dashLen = dotLen * 3;
-            const pauseSymbol = dotLen;
-            const pauseChar = dotLen * 3;
-
-            let timeOffset = 0;
-            
-            for(let i=0; i<sequence.length; i++) {
-                const char = sequence[i];
-                if(char === '.') {
-                    setTimeout(() => playTone(dotLen), timeOffset * 1000);
-                    timeOffset += dotLen + pauseSymbol;
-                } else if (char === '-') {
-                    setTimeout(() => playTone(dashLen), timeOffset * 1000);
-                    timeOffset += dashLen + pauseSymbol;
-                } else if (char === ' ') {
-                    timeOffset += pauseChar - pauseSymbol; 
-                }
-            }
-        }
-
-        function checkStage4() {
-            const input = $('s4-input').value.toUpperCase().trim();
-            if(input === s4TargetWord) {
-                nextStage();
-            } else {
-                showMsg('s4-msg', '拼錯囉，對照旁邊的表再聽一次看看！');
-            }
-        }
-
-        // --- Stage 5: ASCII ---
-        function checkStage5() {
-            const ans1 = $('s5-q1').value.toUpperCase().trim();
-            const ans2 = $('s5-q2').value.toUpperCase().trim();
-
-            if(ans1 === 'HI' && ans2 === 'HELP') {
-                nextStage();
-            } else {
-                showMsg('s5-msg', '密碼不正確喔，請仔細比對 ASCII 表！');
-            }
-        }
-
-        // --- Stage 6: 密室逃脫 ---
-        function checkStage6() {
-            const ans = $('s6-input').value.toUpperCase().replace(/\s/g, '');
-            if(ans === '15ASOS') {
-                nextStage();
-            } else {
-                showMsg('s6-msg', '密碼錯誤！請再檢查一下三個線索。');
-            }
-        }
-
-        // --- Stage 7: 影片解碼 ---
-        function checkStage7() {
-            // ★★★ 老師請在這裡設定最終影片解碼答案 ★★★
-            const correctAnswer = 'BINARY'; 
-            
-            const ans = $('s7-input').value.toUpperCase().trim();
-            if(ans === correctAnswer) {
-                nextStage(); 
-            } else {
-                showMsg('s7-msg', '答案不對喔，仔細看影片裡的提示！');
-            }
-        }
-
-        // --- 結算與傳送資料 ---
-        function finishGame() {
-            clearInterval(state.timerInterval);
-            $('top-nav').classList.add('hidden');
-            $('stage-result').classList.remove('hidden');
-
-            $('res-name').textContent = state.name;
-            $('res-class').textContent = state.classId;
-            $('res-seat').textContent = state.seat;
-            $('res-time').textContent = formatTime(state.totalSeconds);
-
-            sendDataToGAS();
-        }
-
-        function sendDataToGAS() {
-            if(!config.gasUrl) {
-                $('res-status').textContent = "未連接雲端 (本機測試模式) 🆗";
-                $('res-status').className = "bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm font-bold mt-1 inline-block";
-                return;
-            }
-
-            const payload = {
-                class: state.classId,
-                seat: state.seat,
-                name: state.name,
-                stage1Score: state.scores.s1, 
-                stage2Score: state.scores.s2, 
-                totalTime: state.totalSeconds
+            const config = {
+                totalStages: 7,
+                gasUrl: 'https://script.google.com/macros/s/AKfycbx_8LLQoqF81ZqQZ3b7xuSv-YraWDcUiNDm3RY8PKxK-iDewZTPEHXXKUmUPAXvuvhD/exec'
             };
 
-            fetch(config.gasUrl, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            })
-            .then(() => {
-                $('res-status').textContent = "上傳成功！老師已收到你的成績 🎉";
-                $('res-status').className = "bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-bold mt-1 inline-block";
-            })
-            .catch(err => {
-                $('res-status').textContent = "上傳失敗，請通知老師 ❌";
-                $('res-status').className = "bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-bold mt-1 inline-block";
-                console.error(err);
-            });
-        }
+            const state = {
+                classId: '', seat: '', name: '',
+                startTime: null, timerInterval: null, totalSeconds: 0,
+                currentStage: 0,
+                scores: { s1: 0, s2: 0, s3: 0 }
+            };
+
+            const $ = id => document.getElementById(id);
+
+            // 輔助解密驗證函數 (比較 Base64)
+            const verifyAns = (input, expectedHash) => btoa(encodeURIComponent(input)) === expectedHash;
+
+            // --- 綁定 UI 事件 ---
+            $('btn-start').addEventListener('click', startGame);
+            $('btn-check-s2').addEventListener('click', checkStage2);
+            $('s3-input').addEventListener('input', updateStage3);
+            $('s3-next-btn').addEventListener('click', nextStage);
+            $('btn-play-morse').addEventListener('click', playMorseSequence);
+            $('btn-check-s4').addEventListener('click', checkStage4);
+            $('btn-check-s5').addEventListener('click', checkStage5);
+            $('btn-check-s6').addEventListener('click', checkStage6);
+            $('btn-check-s7').addEventListener('click', checkStage7);
+            $('btn-reload').addEventListener('click', () => location.reload());
+
+            // --- 共用函數 ---
+            function playSfx(type) {
+                const audio = type === 'success' ? $('sfx-success') : $('sfx-error');
+                audio.currentTime = 0;
+                audio.play().catch(e => console.log('Audio play failed:', e));
+            }
+
+            function showMsg(id, msg, isError = true) {
+                const el = $(id);
+                el.textContent = msg;
+                el.className = isError ? "h-6 mt-1 text-pink-500 font-bold text-center" : "h-6 mt-1 text-green-500 font-bold text-center";
+                if(isError) {
+                    playSfx('error');
+                    $(id).parentElement.animate([
+                        { transform: 'translateX(0)' }, { transform: 'translateX(-5px)' },
+                        { transform: 'translateX(5px)' }, { transform: 'translateX(0)' }
+                    ], { duration: 300 });
+                }
+                setTimeout(() => el.textContent = '', 3000);
+            }
+
+            function updateProgress() {
+                const pct = (state.currentStage / config.totalStages) * 100;
+                $('progress-bar').style.width = `${pct}%`;
+                $('nav-stage').textContent = `${state.currentStage}/${config.totalStages}`;
+            }
+
+            function formatTime(sec) {
+                const m = Math.floor(sec / 60).toString().padStart(2, '0');
+                const s = (sec % 60).toString().padStart(2, '0');
+                return `${m}:${s}`;
+            }
+
+            function switchStage(stageNum) {
+                document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+                state.currentStage = stageNum;
+                const target = $(`stage-${stageNum}`);
+                
+                if(target) {
+                    target.classList.remove('hidden');
+                    target.animate([{ opacity: 0, transform: 'translateY(20px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 400, easing: 'ease-out' });
+                    updateProgress();
+                } else if (stageNum > config.totalStages) {
+                    finishGame();
+                }
+
+                if(stageNum === 1) initStage1();
+                if(stageNum === 2) initStage2();
+            }
+
+            function nextStage() {
+                playSfx('success');
+                setTimeout(() => switchStage(state.currentStage + 1), 400);
+            }
+
+            // --- Stage 0: 登入 ---
+            function startGame() {
+                state.classId = $('input-class').value.trim();
+                state.seat = $('input-seat').value.trim();
+                state.name = $('input-name').value.trim();
+
+                if(!state.classId || !state.seat || !state.name) {
+                    alert("⚠️ 請完整填寫班級、座號和姓名喔！");
+                    return;
+                }
+
+                $('top-nav').classList.remove('hidden');
+                $('nav-agent-name').textContent = state.name;
+                
+                state.startTime = Date.now();
+                state.timerInterval = setInterval(() => {
+                    state.totalSeconds = Math.floor((Date.now() - state.startTime) / 1000);
+                    $('nav-time').textContent = formatTime(state.totalSeconds);
+                }, 1000);
+
+                nextStage();
+            }
+
+            // --- Stage 1: 二進位 ---
+            let s1Target = 0, s1Count = 0;
+            const weights = [128, 64, 32, 16, 8, 4, 2, 1];
+            
+            function initStage1() {
+                s1Count = 0;
+                $('s1-progress').textContent = s1Count;
+                renderSwitches();
+                generateS1Question();
+            }
+
+            function renderSwitches() {
+                const container = $('bit-switches-container');
+                container.innerHTML = '';
+                weights.forEach((w) => {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = "flex flex-col items-center";
+                    const label = document.createElement('div');
+                    label.className = "text-sm text-gray-500 font-bold font-mono mb-2 bg-white px-2 rounded-lg border border-gray-200 shadow-sm";
+                    label.textContent = w;
+                    
+                    const btn = document.createElement('div');
+                    btn.className = "bit-switch";
+                    btn.dataset.val = w;
+                    btn.dataset.state = 0;
+                    btn.innerHTML = `<div class="bit-led"></div>`;
+                    btn.onclick = () => toggleBit(btn); // 封裝在閉包內，外部無法呼叫
+
+                    wrapper.appendChild(label);
+                    wrapper.appendChild(btn);
+                    container.appendChild(wrapper);
+                });
+            }
+
+            function generateS1Question() {
+                s1Target = Math.floor(Math.random() * 255) + 1;
+                $('s1-target').textContent = s1Target;
+                document.querySelectorAll('.bit-switch').forEach(btn => {
+                    btn.classList.remove('on');
+                    btn.dataset.state = 0;
+                });
+                updateS1Sum();
+            }
+
+            function toggleBit(btn) {
+                const isOon = btn.dataset.state === '1';
+                btn.dataset.state = isOon ? '0' : '1';
+                btn.classList.toggle('on');
+                updateS1Sum();
+            }
+
+            function updateS1Sum() {
+                let sum = 0;
+                document.querySelectorAll('.bit-switch').forEach(btn => {
+                    if(btn.dataset.state === '1') sum += parseInt(btn.dataset.val);
+                });
+                $('s1-current').textContent = sum;
+
+                if(sum === s1Target) {
+                    state.scores.s1++;
+                    s1Count++;
+                    $('s1-progress').textContent = s1Count;
+                    showMsg('s1-msg', '答對了！太厲害啦 👏', false);
+                    playSfx('success');
+                    
+                    if(s1Count >= 5) {
+                        setTimeout(() => nextStage(), 1000);
+                    } else {
+                        setTimeout(generateS1Question, 1000);
+                    }
+                }
+            }
+
+            // --- Stage 2: 容量 ---
+            // 題目不含明文答案
+            const s2Questions = [
+                { q: "請問哪一個容量比較大？", options: ["512 MB", "1 GB"] },
+                { q: "請問哪一個傳輸速率比較快？", options: ["100 Mbps", "10 MB/s"] },
+                { q: "下載一個 500 MB 的遊戲檔案，家裡網速是 50 Mbps，大約需要多少時間？", options: ["10 秒", "80 秒", "100 秒"] }
+            ];
+            // 以 Base64 加密的答案 index
+            const s2Hashes = ['MQ==', 'MA==', 'MQ==']; 
+
+            function initStage2() {
+                const container = $('s2-question-container');
+                container.innerHTML = '';
+                s2Questions.forEach((item, qIdx) => {
+                    let html = `<div class="bg-white p-5 rounded-2xl border-2 border-gray-100 shadow-sm"><p class="text-gray-800 font-bold mb-4 text-lg">Q${qIdx+1}: ${item.q}</p><div class="flex flex-col sm:flex-row gap-3">`;
+                    item.options.forEach((opt, oIdx) => {
+                        html += `<label class="radio-card flex-1 text-center s2-radio" data-group="s2-q${qIdx}">
+                                    <input type="radio" name="s2-q${qIdx}" value="${oIdx}">
+                                    <span>${opt}</span>
+                                 </label>`;
+                    });
+                    html += `</div></div>`;
+                    container.innerHTML += html;
+                });
+
+                // 動態綁定單選題 UI 效果
+                document.querySelectorAll('.s2-radio').forEach(label => {
+                    label.addEventListener('click', function() {
+                        const groupName = this.dataset.group;
+                        document.querySelectorAll(`[data-group="${groupName}"]`).forEach(r => r.classList.remove('selected'));
+                        this.classList.add('selected');
+                        this.querySelector('input').checked = true;
+                    });
+                });
+            }
+
+            function checkStage2() {
+                let allCorrect = true;
+                s2Questions.forEach((_, qIdx) => {
+                    const selected = document.querySelector(`input[name="s2-q${qIdx}"]:checked`);
+                    if(!selected || !verifyAns(selected.value, s2Hashes[qIdx])) {
+                        allCorrect = false;
+                    }
+                });
+
+                if(allCorrect) {
+                    state.scores.s2 = 100;
+                    nextStage();
+                } else {
+                    showMsg('s2-msg', '哎呀，有地方算錯囉！再仔細想想單位的換算。');
+                }
+            }
+
+            // --- Stage 3: 文字數位化 ---
+            let s3Tested = new Set();
+            function updateStage3() {
+                const input = $('s3-input').value.toUpperCase();
+                if(input.length === 1 && /[A-Z]/.test(input)) {
+                    const dec = input.charCodeAt(0);
+                    const bin = dec.toString(2).padStart(8, '0');
+                    $('s3-dec').textContent = dec;
+                    $('s3-bin').textContent = bin;
+                    
+                    s3Tested.add(input);
+                    $('s3-count').textContent = s3Tested.size;
+                    if(s3Tested.size >= 3) {
+                        $('s3-next-btn').classList.remove('hidden');
+                    }
+                } else {
+                    $('s3-dec').textContent = '---';
+                    $('s3-bin').textContent = '--------';
+                }
+            }
+
+            // --- Stage 4: 摩斯密碼 ---
+            const s4Hash = "SEVMTE8="; // 加密答案
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            let audioCtx;
+
+            function playTone(duration) {
+                if (!audioCtx) audioCtx = new AudioContext();
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.value = 600; 
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                osc.start();
+                gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
+                osc.stop(audioCtx.currentTime + duration);
+            }
+
+            function playMorseSequence() {
+                const sequence = $('s4-morse-display').textContent;
+                const dotLen = 0.1; 
+                const dashLen = dotLen * 3;
+                const pauseSymbol = dotLen;
+                const pauseChar = dotLen * 3;
+
+                let timeOffset = 0;
+                
+                for(let i=0; i<sequence.length; i++) {
+                    const char = sequence[i];
+                    if(char === '.') {
+                        setTimeout(() => playTone(dotLen), timeOffset * 1000);
+                        timeOffset += dotLen + pauseSymbol;
+                    } else if (char === '-') {
+                        setTimeout(() => playTone(dashLen), timeOffset * 1000);
+                        timeOffset += dashLen + pauseSymbol;
+                    } else if (char === ' ') {
+                        timeOffset += pauseChar - pauseSymbol; 
+                    }
+                }
+            }
+
+            function checkStage4() {
+                const input = $('s4-input').value.toUpperCase().trim();
+                if(verifyAns(input, s4Hash)) {
+                    nextStage();
+                } else {
+                    showMsg('s4-msg', '拼錯囉，對照旁邊的表再聽一次看看！');
+                }
+            }
+
+            // --- Stage 5: ASCII ---
+            const s5Q1Hash = "SEk=";
+            const s5Q2Hash = "SEVMUA==";
+
+            function checkStage5() {
+                const ans1 = $('s5-q1').value.toUpperCase().trim();
+                const ans2 = $('s5-q2').value.toUpperCase().trim();
+
+                if(verifyAns(ans1, s5Q1Hash) && verifyAns(ans2, s5Q2Hash)) {
+                    nextStage();
+                } else {
+                    showMsg('s5-msg', '密碼不正確喔，請仔細比對 ASCII 表！');
+                }
+            }
+
+            // --- Stage 6: 密室逃脫 ---
+            const s6Hash = "MTVBU09T";
+
+            function checkStage6() {
+                const ans = $('s6-input').value.toUpperCase().replace(/\s/g, '');
+                if(verifyAns(ans, s6Hash)) {
+                    nextStage();
+                } else {
+                    showMsg('s6-msg', '密碼錯誤！請再檢查一下三個線索。');
+                }
+            }
+
+            // --- Stage 7: 影片解碼 ---
+            const s7Hash = "QklOQVJZ"; 
+
+            function checkStage7() {
+                const ans = $('s7-input').value.toUpperCase().trim();
+                if(verifyAns(ans, s7Hash)) {
+                    nextStage(); 
+                } else {
+                    showMsg('s7-msg', '答案不對喔，仔細看影片裡的提示！');
+                }
+            }
+
+            // --- 結算與傳送資料 ---
+            function finishGame() {
+                clearInterval(state.timerInterval);
+                $('top-nav').classList.add('hidden');
+                $('stage-result').classList.remove('hidden');
+
+                $('res-name').textContent = state.name;
+                $('res-class').textContent = state.classId;
+                $('res-seat').textContent = state.seat;
+                $('res-time').textContent = formatTime(state.totalSeconds);
+
+                sendDataToGAS();
+            }
+
+            function sendDataToGAS() {
+                if(!config.gasUrl) return;
+
+                const payload = {
+                    class: state.classId,
+                    seat: state.seat,
+                    name: state.name,
+                    stage1Score: state.scores.s1, 
+                    stage2Score: state.scores.s2, 
+                    totalTime: state.totalSeconds
+                };
+
+                fetch(config.gasUrl, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                })
+                .then(() => {
+                    $('res-status').textContent = "上傳成功！老師已收到你的成績 🎉";
+                    $('res-status').className = "bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-bold mt-1 inline-block";
+                })
+                .catch(err => {
+                    $('res-status').textContent = "上傳失敗，請通知老師 ❌";
+                    $('res-status').className = "bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-bold mt-1 inline-block";
+                    console.error(err);
+                });
+            }
+
+        }); // 結束 DOMContentLoaded 閉包
     </script>
 </body>
 </html>
