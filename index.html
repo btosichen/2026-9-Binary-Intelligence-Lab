@@ -351,7 +351,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const config = {
-                gasUrl: 'https://script.google.com/macros/s/AKfycbxF9dGbGQqTWDAFUva8YV7u7pQWIOSJotnKKVm8cE37lSUgK3AYQ0XkSufQzfiNE1pV/exec'
+                gasUrl: 'https://script.google.com/macros/s/AKfycbx_8LLQoqF81ZqQZ3b7xuSv-YraWDcUiNDm3RY8PKxK-iDewZTPEHXXKUmUPAXvuvhD/exec'
             };
 
             const state = {
@@ -536,11 +536,17 @@
                 else { $('s6-msg').textContent = "密碼錯誤！"; playSfx('error'); }
             };
 
-            // 第七關: 影片
+            // 第七關: 影片 (密碼加密驗證版)
             $('btn-check-s7').onclick = () => {
-                if($('s7-input').value.toLowerCase() === 'hint') {
-                    playSfx('success'); clearInterval(state.timerInterval); finish();
-                } else { $('s7-msg').textContent = "這不是影片密碼喔！"; playSfx('error'); }
+                // 將輸入的字串轉為 Base64 雜湊值進行驗證 (對應原本的 'hint')
+                if(verify($('s7-input').value, "SElOVA==")) {
+                    playSfx('success'); 
+                    clearInterval(state.timerInterval); 
+                    finish();
+                } else { 
+                    $('s7-msg').textContent = "這不是影片密碼喔！"; 
+                    playSfx('error'); 
+                }
             };
 
             function finish() {
